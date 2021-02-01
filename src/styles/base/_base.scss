@@ -1,0 +1,35 @@
+/**
+ * Partical project file
+ * Files starting with an underscore are know as partials
+ * This file is imported in the styles.scss file
+ *
+ * 
+ */
+
+/**
+ * Size explained: 
+ * 	Default page size = 16
+ * 	16 * 0.625 = 10
+ * 	Page name has a base 10 
+ *
+ *		Now if we use say 18rem the pixel size will be 18px
+ */
+html
+{
+	font-size: 62.5%;
+}
+body
+{
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: $m-size;
+}
+
+button
+{
+	cursor: pointer; // changes mouse cursor to hand
+}
+
+button:disabled
+{
+	cursor: default;
+}
