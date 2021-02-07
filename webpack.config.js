@@ -11,7 +11,8 @@ const path = require('path');
 module.exports = 
 {
    // entry is the file that gets loaded and executed by default
-   entry: "./src/app.js",
+   entry: "./src/playground/redux-101.js",
+   // entry: "./src/app.js",
    output:
    {
       path: path.join(__dirname, 'public'),
