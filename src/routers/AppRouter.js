@@ -8,10 +8,15 @@ import HelpPage from '../components/HelpPage';
 import NotFoundPage from '../components/NotFoundPage';
 import Header from '../components/Header';
 
-
-// BrowserRouter can only have a single element inside of it
-// Switch makes the app traverse through the Route's in order, trying to find a match for the page in the url. So if a page isn't found it will show the final component, NotFoundPage, (which doesn't have a path)
-// @:id will give use access to whatever comes after edit/
+/**
+ * @constant AppRouter
+ * 
+ * @BrowserRouter can only have a single element inside of it
+ * @Switch makes the app traverse through the Route's in order, trying to find a match for the page in the url. So if a page isn't found it will show the final component, NotFoundPage, (which doesn't have a path)
+ * 
+ * @Route
+ * 	@:id will give use access to whatever comes after edit/
+ */
 const AppRouter = () => 
 (
 	<BrowserRouter>
