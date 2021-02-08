@@ -3,27 +3,27 @@
  * Curly braces {}
  */
 
-// const person =
-// {
-// 	name: 'Joe',
-// 	age: 32,
-// 	location: 
-// 	{
-// 		city: 'Cardiff',
-// 		temp: 82
-// 	}
-// };
+const person =
+{
+	name: 'Joe',
+	age: 32,
+	location: 
+	{
+		city: 'Cardiff',
+		temp: 82
+	}
+};
 
-// // person is the object we're trying to destructure
-// // We can used equals (=) to set up a default value for name. If we didn't set a default we would get undefined
-// const { name: firstName = 'Annonymous', age} = person; // This line is equivelant to the two lines below
-// // const name = person.name;
-// // const age = person.age;
-// console.log(`${firstName} is ${age}.`);
+// person is the object we're trying to destructure
+// We can used equals (=) to set up a default value for name. If we didn't set a default we would get undefined
+const { name: firstName = 'Annonymous', age} = person; // This line is equivelant to the two lines below
+// const name = person.name;
+// const age = person.age;
+console.log(`${firstName} is ${age}.`);
 
-// // You can use the colon to rename a variable like with temp. This also means that temp is no longer defined
-// const { temp: temperature, city } = person.location 
-// console.log(`It's ${temperature} in ${city}`);
+// You can use the colon to rename a variable like with temp. This also means that temp is no longer defined
+const { temp: temperature, city } = person.location 
+console.log(`It's ${temperature} in ${city}`);
 
 // Book object
 const book =
@@ -36,6 +36,8 @@ const book =
 	}
 };
 
+// changing name to publisherName and giving it a default value
+// of 'Self-Published'
 const { name: publisherName = 'Self-Published'} = book.publisher;
 
 console.log(publisherName);
@@ -61,15 +63,15 @@ console.log(publisherName);
 // const [ , city, county] = address;
 // console.log(`You are in ${city}, ${county}.`);
 
-// const address = [];
-// // You can create defaults
-// const [ , , county = 'some county' ] = address
-// console.log(`You are in ${county}.`)
+const address = [];
+// You can create defaults
+let [ , , county = 'some county' ] = address
+console.log(`You are in ${county}.`)
 
 
-// const address = ['26 Donald Street', 'Cardiff', 'South Glamorgan', 'CF244TQ'];
-// const [ , city, county = 'some state'] = address;
-// console.log(`You are in ${city}, ${county}.`);
+const address2 = ['26 Donald Street', 'Cardiff', 'South Glamorgan', 'CF244TQ'];
+let [ , city, county = 'some state'] = address2;
+console.log(`You are in ${city}, ${county}.`);
 
 
 
