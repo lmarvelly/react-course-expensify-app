@@ -1,9 +1,60 @@
 // The redux store is the thing that tracks the data over time
 import { createStore } from 'redux';
 
+/** 
+ * @constant incrementCount 
+ * @description 
+ * Takes in a number to increment by. If no value is given then it'll
+ * get incremented by the default 1
+ * 
+ * @param incrementBy We deconstruct this object so it can be 
+ * accessed directly.
+ * If no object is provided then the default is going to be an empty
+ * object. The function will try to destruct that empty object and 
+ * give 1
+ * 
+ * @returns  
+ * 
+ */
+const incrementCount = ({ incrementBy = 1 } = {}) => (
+{
+	type: 'INCREMENT',
+	incrementBy
+});
+
+const decrementCount = ({ decrementBy = 1 } = {}) => (
+{
+	type: 'DECREMENT',
+	decrementBy
+});
+
+const resetCount = () => (
+{
+	type: 'RESET'
+});
+
+const setCount = ({count} = {}) => (
+{
+	type: 'SET',
+	count
+});
+
+/** 
+ * Reducers
+ * 1. Reducers are pure functions
+ * 	* The output is only determined by the input and they do not
+ * 	effect anything outside of the function.
+ * 	i.e the countReducer has params state and action and it 
+ * 	returns a new state
+ * 2. Never directly change state or action!!!
+ * 	You should read off them returning a new state. 
+ * 	Directly changing the state can have undesited effects
+ */
+
 /**
- * @constant store
- * @description We've set it up with two arguments. 
+ * @constant countReducer
+ * @description This is a reducer.
+ * We've set it up with two arguments. 
  * The first argument is the that state of the store. 
  * The second argument is the action to be taken by the store. i.e
  * the action.type which in this case can be INCREMENT, DECREMENT
@@ -12,12 +63,10 @@ import { createStore } from 'redux';
  * When we change the state we don't change it directly. Instead we 
  * compute the new state using the previous state. Editing the state
  * directly is a BAD idea.
+ * Incidently this function is called a Reducer in the Redux library
  * 
  * @argument INCREMENT
- * 
- * We use the ternary operator to deterning if a 'number' has 
- * been passed in. If so we increment by that number. If not
- * then we use the default increment of 1
+ * Returns the old value + the amount that count is incremented by
  * 
  * typeof returns a string representing the type of operand .
  * In this case we're looking for 'number'
@@ -31,24 +80,20 @@ import { createStore } from 'redux';
  * @argument SET
  * Sets the count to whatever is passed into count
  * 
- * @default state returns state
- * if action.type is not equal to increment then it means 
- * this is the first time this is being run so we return the default 
+ * @default state returns state if is the first time this is being run  
  * 
  */
-const store = createStore((state = { count: 0 }, action) => 
+const countReducer = (state = { count: 0 }, action) => 
 {
 	switch (action.type)
 	{
 		case 'INCREMENT':
-			const incrementBy = typeof action.incrementBy === 'number' ? action.incrementBy : 1;
 			return {
-				count: state.count + incrementBy
+				count: state.count + action.incrementBy
 			};
 		case 'DECREMENT':
-			const decrementBy = typeof action.decrementBy === 'number' ? action.decrementBy : 1;
 			return {
-				count: state.count - decrementBy
+				count: state.count - action.decrementBy
 			};
 		case 'SET':
 			return {
@@ -61,7 +106,10 @@ const store = createStore((state = { count: 0 }, action) =>
 		default:
 			return state;
 	}
-});
+};
+
+
+const store = createStore(countReducer);
 
 // subscribe watches for changes in Rudux's store
 // call unsubscribe() to unsubscribe from changes. The changes are 
@@ -81,38 +129,28 @@ const unsubscribe = store.subscribe(() =>
  * seperate words
  */
 
-// Increment count
-store.dispatch(
-{
-	type: 'INCREMENT',
-	incrementBy: 5
-});
+// Increment count. Writting it as seen below makes it hard to detect
+// errors because it won't come up with a proper error if you misspell
+// 'INCREMENT'
+// store.dispatch(
+// {
+// 	type: 'INCREMENT',
+// 	incrementBy: 5
+// });
 
-store.dispatch(
-{
-	type: 'INCREMENT'
-});
+store.dispatch(incrementCount({ incrementBy: 5 }));
+store.dispatch(incrementCount());
 
 // Reset the count to zero 
-store.dispatch
-({
-	type: 'RESET'
-});
+store.dispatch(resetCount());
 
 // Decrement count
-store.dispatch(
-{
-	type: 'DECREMENT'
-});
+store.dispatch(decrementCount({ decrementBy: 4 }));
+store.dispatch(decrementCount());
 
-store.dispatch(
-{
-	type: 'DECREMENT',
-	decrementBy: 10
-});
+store.dispatch(setCount({ count: 101 }));
+// There should never be a time when setCount() is called with no
+// parameters because we force the user to give one
+// store.dispatch(setCount());
 
-store.dispatch(
-{
-	type: 'SET',
-	count: 101
-});
+store.dispatch(resetCount());
