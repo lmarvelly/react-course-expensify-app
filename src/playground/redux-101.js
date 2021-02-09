@@ -141,16 +141,17 @@ const unsubscribe = store.subscribe(() =>
 store.dispatch(incrementCount({ incrementBy: 5 }));
 store.dispatch(incrementCount());
 
-// Reset the count to zero 
 store.dispatch(resetCount());
 
-// Decrement count
 store.dispatch(decrementCount({ decrementBy: 4 }));
 store.dispatch(decrementCount());
 
+/**
+ * There should never be a time when setCount() is called with no
+ * parameters because we force the user to give one
+ * store.dispatch(setCount());
+ */
 store.dispatch(setCount({ count: 101 }));
-// There should never be a time when setCount() is called with no
-// parameters because we force the user to give one
-// store.dispatch(setCount());
+
 
 store.dispatch(resetCount());

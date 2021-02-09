@@ -16,7 +16,7 @@ const addExpense = (
 		description = '', 
 		note = '', 
 		amount = 0, 
-		createAt = 0 
+		createdAt = 0 
 	} = {}
 ) => (
 {
@@ -27,7 +27,7 @@ const addExpense = (
 		description,
 		note,
 		amount,
-		createAt
+		createdAt
 	}
 });
 
@@ -195,6 +195,53 @@ const filtersReducer = (state = filtersReducerDefaultState, action) =>
 
 
 /**
+ * @constant getVisibleExpenses
+ * @description Get Visible Expenses
+ * @argument expenses
+ * @argument {*} filters we destructre the second argument which is 
+ * filters
+ */
+const getVisibleExpenses = (expenses, { text, sortBy, startDate, endDate }) => 
+{
+	return expenses.filter((expense) => 
+	{
+		// if all of these return true then the item will be kept in 
+		// the array. If any are false then they will be removed.
+		//
+		// startDateMatch logic checks to see if startDate is not a 
+		// number. If it is not a number (undefined) the first block is
+		// true and a filter was not set. 
+		// If it's a number then a filter for the start date was set 
+		// and the second block runs. This checks to see if it's 
+		// greater or equal to the startDate filter. 
+		const startDateMatch = typeof startDate !== 'number' || expense.createdAt >= startDate;
+		// endDateMatch is simular to startDateMatch except it checks 
+		// to see if there's a end date filter and if it's less than 
+		// that
+		const endDateMatch = typeof endDate !== 'number' || expense.createdAt <= endDate;
+		// If there is a text filter it checks to see if the text matches
+		// anything in the description. Both texts are converted to
+		// lowercase making it case-insensitive
+		const textMatch = expense.description.toLowerCase().includes(text.toLowerCase());
+
+		return startDateMatch && endDateMatch && textMatch;
+	}).sort((a, b) => 
+	// here we're customising the sort method to know what properties 
+	// to sort by.
+	{
+		if (sortBy === 'date')
+		{
+			return a.createdAt < b.createdAt ? 1 : -1;
+		}
+		else if (sortBy === 'amount')
+		{
+			return a.amount < b.amount ? 1 : -1;
+		}
+	});
+};
+
+
+/**
  * @constant store
  * 
  * @function combineReducers is used to combine our two reducers.
@@ -211,25 +258,28 @@ const store = createStore(
 // Whenever the state is changed it gets printed out
 store.subscribe(() => 
 {
-	console.log(store.getState());
+	const state = store.getState();
+	const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
+	console.log(visibleExpenses);
 });
 
-// const expenseOne = store.dispatch(addExpense({ description: 'Rent', amount: 100 }));
-// const expenseTwo = store.dispatch(addExpense({ description: 'Coffee', amount: 300 }));
+const expenseOne = store.dispatch(addExpense({ description: 'Rent', amount: 100, createdAt: -21000 }));
+const expenseTwo = store.dispatch(addExpense({ description: 'Coffee', amount: 300, createdAt: -1000 }));
+const expenseThr = store.dispatch(addExpense({ description: 'Coffee', amount: 250, createdAt: -2000 }));
 
 // store.dispatch(removeExpense({ id: expenseOne.expense.id }));
 
 // store.dispatch(editExpense(expenseTwo.expense.id, { amount: 500 }));
 
-// store.dispatch(setTextFilter('rent'));
+// store.dispatch(setTextFilter('FFE'));
 // store.dispatch(setTextFilter());
 
-// store.dispatch(sortByAmount());
+store.dispatch(sortByAmount());
 // store.dispatch(sortByDate());
 
-store.dispatch(setStartDate(125)); // startDate = 125
-store.dispatch(setStartDate()); // reset startDate = 0
-store.dispatch(setEndDate(1250)); // endDate 1250
+// store.dispatch(setStartDate(0)); // startDate = 125
+// store.dispatch(setStartDate()); // reset startDate = 0
+// store.dispatch(setEndDate(999)); // endDate 1250
 
 /**
  * @constant demoState a demo made to show how the expenses app will
@@ -249,7 +299,7 @@ const demoState =
 		description: 'January Rent',
 		note: 'This was the final payment for that address',
 		amount: 35000, // using pennies to avoid errors when rounding or other calculations involving decimal places 
-		createAt: 0
+		createdAt: 0
 	}],
 	filters:
 	{
