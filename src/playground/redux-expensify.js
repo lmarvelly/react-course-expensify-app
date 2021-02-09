@@ -7,7 +7,7 @@ import uuid from 'uuid'; // generates universilally unique identifiers
 /**
  * @constant addExpense 
  * 
- *  ADD_EXPENSE
+ * @param ADD_EXPENSE type: 'ADD_EXPENSE'
  * @param {*} param0 default expense values
  */
 const addExpense = (
@@ -20,9 +20,9 @@ const addExpense = (
 ) => (
 {
 	type: 'ADD_EXPENSE',
-	expenses:
+	expense:
 	{
-		id: uuid,
+		id: uuid(),
 		description,
 		note,
 		amount,
@@ -30,9 +30,35 @@ const addExpense = (
 	}
 });
 
-// REMOVE_EXPENSEY
-// EDIT_EXPENSE
+/**
+ * @constant removeExpense
+ * 
+ * @param id this is the id pulled out of an expense. We can do this 
+ * because we deconstructed it
+ */
+const removeExpense = ({ id } = {}) => (
+{
+	type: 'REMOVE_EXPENSE',
+	id
+});
+
+/**
+ * @constant editExpense
+ */
+const editExpense = (id, updates) => (
+{
+	type: 'EDIT_EXPENSE',
+	id,
+	updates
+});
+
 // SET_TEXT_FILTER
+const setTextFilter = (text = "") => (
+{
+	type: 'SET_TEXT_FILTER',
+	text
+});
+
 // SORT_BY_DATE
 // SORT_BY_AMOUNT
 // SET_START_DATE
@@ -50,18 +76,56 @@ const expensesReducerDefaultState = [];
  * @param {*} state default is an empty array as we will be starting
  * with no expenses
  * @param {*} action 
+ * 
+ * @argument ADD_EXPENSE we use the spread operator because it 
+ * creates a new array and we can add new items to the begining or 
+ * end. We then return that array.
+ * @argument ADD_EXPENSE Goes through each expense in state using 
+ * filter. We first destructure each expense to get just the id if 
+ * they're not equal (true) then they will be kept. if they are equal 
+ * (false) then the object will be destroyed
+ * @argument ADD_EXPENSE We use map to go through every single item 
+ * in the expense array. 
+ * If the id passed in (action.id) is a match 
+ * for an id in the map (expense.id) then we want to return a new 
+ * object expense which gets the original object spread (...expense)
+ * and overrides with the changes passed in (...action.updates). 
+ * Else, if expense id does not match, there will be no change to 
+ * expense and the expense is returned
  */
 const expensesReducer = (state = expensesReducerDefaultState, action) =>
 {
 	switch (action.type)
 	{
+		case 'ADD_EXPENSE':
+			return [
+				...state, // spread operater
+				action.expense
+			];
+		case 'REMOVE_EXPENSE':
+			return state.filter(({ id }) => id !== action.id);
+		case 'EDIT_EXPENSE':
+			return state.map((expense) => 
+			{
+				if (expense.id === action.id)
+				{
+					return {
+						...expense,
+						...action.updates
+					}
+				}
+				else
+				{
+					return expense;
+				}
+			});
 		default:
 			return state;
 	}
 };
 
 /**
- * Default filter state
+ * @constant filtersReducerDefaultState The default filter state
  */
 const filtersReducerDefaultState = 
 {
@@ -78,6 +142,11 @@ const filtersReducer = (state = filtersReducerDefaultState, action) =>
 {
 	switch (action.type)
 	{
+		case 'SET_TEXT_FILTER':
+			return {
+				...state,
+				text: action.text
+			};
 		default:
 			return state;
 	}
@@ -104,7 +173,15 @@ store.subscribe(() =>
 	console.log(store.getState());
 });
 
-store.dispatch(addExpense({ description: 'Rent', amount: 100 }));
+const expenseOne = store.dispatch(addExpense({ description: 'Rent', amount: 100 }));
+const expenseTwo = store.dispatch(addExpense({ description: 'Coffee', amount: 300 }));
+
+store.dispatch(removeExpense({ id: expenseOne.expense.id }));
+
+store.dispatch(editExpense(expenseTwo.expense.id, { amount: 500 }));
+
+store.dispatch(setTextFilter('rent'));
+store.dispatch(setTextFilter());
 
 /**
  * @constant demoState a demo made to show how the expenses app will
