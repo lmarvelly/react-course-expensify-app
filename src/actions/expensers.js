@@ -6,7 +6,7 @@ import uuid from 'uuid';
  * @param ADD_EXPENSE type: 'ADD_EXPENSE'
  * @param {*} param0 default expense values
  */
-const addExpense = (
+export const addExpense = (
 	{ 
 		// expense object default values
 		description = '', 
@@ -33,7 +33,7 @@ const addExpense = (
  * @param id this is the id pulled out of an expense. We can do this 
  * because we deconstructed it
  */
-const removeExpense = ({ id } = {}) => (
+export const removeExpense = ({ id } = {}) => (
 {
 	type: 'REMOVE_EXPENSE',
 	id
@@ -42,7 +42,7 @@ const removeExpense = ({ id } = {}) => (
 /**
  * @constant editExpense
  */
-const editExpense = (id, updates) => (
+export const editExpense = (id, updates) => (
 {
 	type: 'EDIT_EXPENSE',
 	id,
