@@ -2,7 +2,7 @@
 const expensesReducerDefaultState = [];
 
 /**
- * @constant expensesReducer 
+ * @function expensesReducer 
  * 
  * @description expenses Reducer
  * 

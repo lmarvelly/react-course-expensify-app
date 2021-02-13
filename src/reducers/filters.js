@@ -10,7 +10,7 @@ const filtersReducerDefaultState =
 };
 
 /**
- * @filtersReducer
+ * @function filtersReducer
  */
 export default (state = filtersReducerDefaultState, action) =>
 {

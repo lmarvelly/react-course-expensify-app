@@ -1,7 +1,7 @@
 import uuid from 'uuid';
 
 /**
- * @constant addExpense 
+ * @function addExpense 
  * 
  * @param ADD_EXPENSE type: 'ADD_EXPENSE'
  * @param {*} param0 default expense values
