@@ -11,7 +11,7 @@ const path = require('path');
 module.exports = 
 {
    // entry is the file that gets loaded and executed by default
-   entry: "./src/playground/redux-expensify.js",
+   entry: "./src/app.js",
    // entry: "./src/app.js",
    output:
    {
