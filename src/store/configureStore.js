@@ -8,7 +8,8 @@ import filtersReducer from '../reducers/filters';
  * @function combineReducers is used to combine our two reducers.
  * expenses will be managed by expensesReducer.
  */
-export default () => {
+export default () => 
+{
 	const store = createStore(
 		combineReducers(
 		{
@@ -16,4 +17,6 @@ export default () => {
 			filters: filtersReducer
 		})
 	);
+
+	return store;
 };
