@@ -1,4 +1,6 @@
 /**
+ * Section 11: The Highter Order Component
+ * 
  * Higher Order Component (HOC) - A component (HOC) that renders 
  * another component
  * 
@@ -9,6 +11,9 @@
  * This show a good example of how HOCs can be used.
  * It shows that we can create a reusable component that displays an 
  * admin message only if the user is admin
+ * 
+ * Watch Section 11: React with Redux for more info on using HOCs in
+ * the project
  */ 
 
 import React from 'react';
