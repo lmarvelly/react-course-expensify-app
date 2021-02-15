@@ -17,7 +17,7 @@ store.dispatch(setTextFilter('water'));
 
 setTimeout(() =>
 {
-	store.dispatch(setTextFilter('rent'));
+	store.dispatch(setTextFilter('gas'));
 }, 2000);
 
 const state = store.getState();
