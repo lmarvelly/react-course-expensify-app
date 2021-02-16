@@ -8,16 +8,24 @@ console.log(now.format('MMM Do, YYYY'));
 
 export default class ExpenseForm extends React.Component
 {	
-	// Default states
-	state = 
+	constructor(props)
 	{
-		description: '',
-		amount: '',
-		note: '',
-		createdAt: moment(),
-		calenderFocused: false,
-		error: ''
-	};
+		super(props);
+
+		// Sets up the default state if it's a new expense or sets 
+		// up current values for editing expense
+		this.state = 
+		{
+			// if an expense exists
+			description: props.expense ? props.expense.description : '',
+			amount: props.expense ? (props.expense.amount / 100).toString() : '',
+			note: props.expense ? props.expense.note : '',
+			createdAt: props.expense ? moment(props.expense.createdAt) : moment(),
+			calenderFocused: false,
+			error: ''
+		}
+	}
+	
 	onDescriptionChange = (e) =>
 	{
 		const description = e.target.value;

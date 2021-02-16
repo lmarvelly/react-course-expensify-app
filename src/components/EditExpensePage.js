@@ -1,12 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { editExpense, removeExpense } from '../actions/expensers';
 import ExpenseForm from './ExpenseForm';
 
 const EditExpensePage = (props) => {
-	console.log(props);
 	return(
 		<div>
-			Editing the expense with id of {props.match.params.id}
+			<ExpenseForm
+				expense={ props.expense }
+				onSubmit={(expense) => 
+				{
+					// console.log("id: ", props.expense.id, 'description: ', expense.description);
+					// the id is also available at match.params.id
+					props.dispatch(editExpense(props.expense.id, expense));
+					console.log('updated', expense);
+					props.history.push('/');
+				}}
+			/>
+			<button
+				onClick={() => 
+				{
+					console.log('removed: ', props.expense.id);
+					props.dispatch(removeExpense({ id: props.expense.id }));
+					props.history.push('/');
+				}}
+			>
+				Remove
+			</button>
 		</div>
 	);
 };
@@ -16,7 +36,12 @@ const EditExpensePage = (props) => {
 const mapStateToProps = (state, props) =>
 {
 	return {
-		// Check current objects props id and checks it against
+		/**
+		 * props.match.params.id: the id that was passed in when 
+		 * linking this page from the dashboard.
+		 * When the above id matches an expense id, that expense will 
+		 * be returned
+		 */
 		expense: state.expenses.find((expense) => expense.id === props.match.params.id)
 	};
 };

@@ -15,7 +15,9 @@ export default () =>
 		{
 			expenses: expensesReducer,
 			filters: filtersReducer
-		})
+		}),
+		// For Chrome/Firefox redux extension
+		window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 	);
 
 	return store;
