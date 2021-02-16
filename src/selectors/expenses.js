@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 /**
  * @function getVisibleExpenses
  * @description Get Visible Expenses
@@ -9,23 +11,38 @@ export default (expenses, { text, sortBy, startDate, endDate }) =>
 {
 	return expenses.filter((expense) => 
 	{
-		// if all of these return true then the item will be kept in 
-		// the array. If any are false then they will be removed.
-		//
-		// startDateMatch logic checks to see if startDate is not a 
-		// number. If it is not a number (undefined) the first block is
-		// true and a filter was not set. 
-		// If it's a number then a filter for the start date was set 
-		// and the second block runs. This checks to see if it's 
-		// greater or equal to the startDate filter. 
-		const startDateMatch = typeof startDate !== 'number' || expense.createdAt >= startDate;
-		// endDateMatch is simular to startDateMatch except it checks 
-		// to see if there's a end date filter and if it's less than 
-		// that
-		const endDateMatch = typeof endDate !== 'number' || expense.createdAt <= endDate;
-		// If there is a text filter it checks to see if the text matches
-		// anything in the description. Both texts are converted to
-		// lowercase making it case-insensitive
+		/**
+		 * Old code
+		 */
+		// // if all of these return true then the item will be kept in 
+		// // the array. If any are false then they will be removed.
+		// //
+		// // startDateMatch logic checks to see if startDate is not a 
+		// // number. If it is not a number (undefined) the first block is
+		// // true and a filter was not set. 
+		// // If it's a number then a filter for the start date was set 
+		// // and the second block runs. This checks to see if it's 
+		// // greater or equal to the startDate filter. 
+		// const startDateMatch = typeof startDate !== 'number' || expense.createdAt >= startDate;
+		// // endDateMatch is simular to startDateMatch except it checks 
+		// // to see if there's a end date filter and if it's less than 
+		// // that
+		// const endDateMatch = typeof endDate !== 'number' || expense.createdAt <= endDate;
+		// // If there is a text filter it checks to see if the text matches
+		// // anything in the description. Both texts are converted to
+		// // lowercase making it case-insensitive
+		// const textMatch = expense.description.toLowerCase().includes(text.toLowerCase());
+
+		/**
+		 * @constant startDateMatch
+		 * @description If there is a startDate
+		 * If there is no start date so it returns true and will never filter out a start date
+		 */
+		const createdAtMoment = moment(expense.createdAt)
+		const startDateMatch = startDate ? 
+			startDate.isSameOrBefore(createdAtMoment, 'day') : true;
+		const endDateMatch = endDate ? 
+			endDate.isSameOrAfter(createdAtMoment, 'day') : true;
 		const textMatch = expense.description.toLowerCase().includes(text.toLowerCase());
 
 		return startDateMatch && endDateMatch && textMatch;
