@@ -5,14 +5,20 @@ import selectExpenses from '../selectors/expenses';
 
 // ExpenseList didn't need anything passed down because we imported
 // and used connect()
-const ExpenseList = (props) => (
+export const ExpenseList = (props) => (
 	<div>
-		<h1>Expense List</h1>
 		{
-			props.expenses.map((expense) => 
+			props.expenses.length === 0 ? 
+			(
+				<p></p>
+			)
+			:
+			(
+				props.expenses.map((expense) => 
 			{
 				return <ExpenseListItem key={ expense.id } { ...expense } />
 			})
+			)
 		}
 	</div>
 );
