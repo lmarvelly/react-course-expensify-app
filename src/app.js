@@ -7,6 +7,7 @@ import { addExpense, editExpense } from './actions/expensers';
 import getVisibleExpenses from './selectors/expenses';
 import 'normalize.css/normalize.css'; // Normalizes all styles starting points on all browsers.
 import './styles/styles.scss'; // SASS styles form
+import 'react-dates/lib/css/_datepicker.css';
 
 const store = configureStore();
 
