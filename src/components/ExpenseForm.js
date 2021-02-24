@@ -20,7 +20,7 @@ export default class ExpenseForm extends React.Component
 			amount: props.expense ? (props.expense.amount / 100).toString() : '',
 			note: props.expense ? props.expense.note : '',
 			createdAt: props.expense ? moment(props.expense.createdAt) : moment(),
-			calenderFocused: false,
+			calendarFocused: false,
 			error: ''
 		}
 	}
@@ -48,7 +48,7 @@ export default class ExpenseForm extends React.Component
 	};
 	onFocusChange = ({ focused }) =>
 	{
-		this.setState(() => ({ calenderFocused: focused }));
+		this.setState(() => ({ calendarFocused: focused }));
 	};
 	onNoteChange = (e) =>
 	{
@@ -98,7 +98,7 @@ export default class ExpenseForm extends React.Component
 					<SingleDatePicker 
 						date={ this.state.createdAt }
 						onDateChange={ this.onDateChange }
-						focused= { this.state.calenderFocused }
+						focused= { this.state.calendarFocused }
 						onFocusChange={ this.onFocusChange }
 						numberOfMonths={ 1 }
 						isOutsideRange={ () => false } // makes everysingle day in future and past available
