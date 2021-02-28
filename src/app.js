@@ -10,6 +10,7 @@ import './styles/styles.scss'; // SASS styles form
 import 'react-dates/lib/css/_datepicker.css';
 
 const store = configureStore();
+console.log('test');
 
 /**
  * Provider provides the store to all of our Components
