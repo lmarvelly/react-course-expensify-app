@@ -1,5 +1,6 @@
 /**
- * We use a little bit of node in this file
+ * We use a little bit of node in this file.
+ * Node doesn't use import so we use require.
  *
  * Entry --> output
  *
@@ -7,11 +8,13 @@
  * configuration details for out webpack build
  */
 const path = require('path');
-// console.log(path.join(__dirname, 'public'));
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = (env) =>
 {
 	const isProduction = env === 'production';
+	const CSSExtract = new ExtractTextPlugin('styles.css');
+
 	console.log('env', env)
 	return {
 		// entry is the file that gets loaded and executed by default
@@ -34,13 +37,17 @@ module.exports = (env) =>
 			},
 			{
 				test: /\.s?css$/, // everytime webpack finds a CSS or SCSS fill, it dumps it into the DOM in a style tag <style>
-				use:[
-					'style-loader',
-					'css-loader',
-					'sass-loader'
-				]
+				use: CSSExtract.extract({
+					use: [
+						'css-loader',
+						'sass-loader'
+					]
+				})
 			}]
 		},
+		plugins: [
+			CSSExtract
+		],
 		// devtool: 'cheap-module-eval-source-map' // this is used with webpack to find errors in the original files we're working on, not the
 		devtool: isProduction ? 'source-map' : 'eval-cheap-module-source-map',
 		devServer: 
