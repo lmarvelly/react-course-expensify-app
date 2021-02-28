@@ -39,8 +39,20 @@ module.exports = (env) =>
 				test: /\.s?css$/, // everytime webpack finds a CSS or SCSS fill, it dumps it into the DOM in a style tag <style>
 				use: CSSExtract.extract({
 					use: [
-						'css-loader',
-						'sass-loader'
+						{
+							loader: 'css-loader',
+							options: 
+							{
+								sourceMap: true
+							}
+						},
+						{
+							loader: 'sass-loader',
+							options:
+							{
+								sourceMap: true
+							}
+						}
 					]
 				})
 			}]
@@ -49,7 +61,7 @@ module.exports = (env) =>
 			CSSExtract
 		],
 		// devtool: 'cheap-module-eval-source-map' // this is used with webpack to find errors in the original files we're working on, not the
-		devtool: isProduction ? 'source-map' : 'eval-cheap-module-source-map',
+		devtool: isProduction ? 'source-map' : 'inline-source-map',
 		devServer: 
 		{
 			contentBase: path.join(__dirname, 'public'),
