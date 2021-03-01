@@ -10,7 +10,7 @@ export const ExpenseList = (props) => (
 		{
 			props.expenses.length === 0 ? 
 			(
-				<p></p>
+				<p>No expenses</p>
 			)
 			:
 			(
