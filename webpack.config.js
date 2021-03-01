@@ -64,8 +64,9 @@ module.exports = (env) =>
 		devtool: isProduction ? 'source-map' : 'inline-source-map',
 		devServer: 
 		{
-			contentBase: path.join(__dirname, 'public'),
-			historyApiFallback: true // show index.html for all 404 errors
+			contentBase: path.join(__dirname, 'public', 'dist'),
+			historyApiFallback: true, // show index.html for all 404 errors
+			publicPath: '/dist/'
 		}
 	};
 };
