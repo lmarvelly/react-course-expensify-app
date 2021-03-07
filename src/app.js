@@ -6,9 +6,9 @@ import configureStore from './store/configureStore';
 import 'normalize.css/normalize.css'; // Normalizes all styles starting points on all browsers.
 import './styles/styles.scss'; // SASS styles form
 import 'react-dates/lib/css/_datepicker.css';
+import './firebase/firebase';
 
 const store = configureStore();
-console.log('test');
 
 /**
  * Provider provides the store to all of our Components

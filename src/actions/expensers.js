@@ -1,4 +1,6 @@
 import uuid from 'uuid';
+import database from '../firebase/firebase';
+import expenses from '../reducers/expenses';
 
 /**
  * @function addExpense 
@@ -6,26 +8,35 @@ import uuid from 'uuid';
  * @param ADD_EXPENSE type: 'ADD_EXPENSE'
  * @param {*} param0 default expense values
  */
-export const addExpense = (
-	{ 
-		// expense object default values
-		description = '', 
-		note = '', 
-		amount = 0, 
-		createdAt = 0 
-	} = {}
-) => (
+export const addExpense = (expense) => (
 {
 	type: 'ADD_EXPENSE',
-	expense:
-	{
-		id: uuid(),
-		description,
-		note,
-		amount,
-		createdAt
-	}
+	expense
 });
+
+export const startAddExpense = (expenseData = {}) => 
+{
+	return (dispatch) => {
+		const {
+			// expense object default values
+			description = '', 
+			note = '', 
+			amount = 0, 
+			createdAt = 0
+		} = expenseData;
+
+		const expense = { description, note, amount, createdAt };
+
+		database.ref('expenses').push(expense).then((ref) =>
+		{
+			dispatch(addExpense(
+			{
+				id: ref.key,
+				...expense
+			}));
+		});
+	};
+};
 
 /**
  * @constant removeExpense
