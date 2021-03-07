@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should generate an expense totaling $195.00 1`] = `
+exports[`should generate an expense totaling $2.35 1`] = `
 <div>
   <h1>
     Viewing 
@@ -13,7 +13,7 @@ exports[`should generate an expense totaling $195.00 1`] = `
 </div>
 `;
 
-exports[`should generate an expense totaling £46.95 1`] = `
+exports[`should generate an expense totaling $25.23 1`] = `
 <div>
   <h1>
     Viewing 
