@@ -54,7 +54,8 @@
 		"react-test-renderer": "16",
 		"webpack-dev-server": "2.5.1"
 	},
-	"engines": {
+	"engines": 
+	{
 		"node": "12.20.1"
 	}
 }
