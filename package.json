@@ -53,5 +53,9 @@
 		"jest": "20.0.4",
 		"react-test-renderer": "16",
 		"webpack-dev-server": "2.5.1"
+	},
+	"engines": 
+	{
+		"node": "8.9.4"
 	}
 }
