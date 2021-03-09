@@ -1,10 +1,4 @@
-/**
- * '* as' takes all of the named exports from 'firebase' and
- * dumps them inside a new variable called firebase.
- * This is required because firebase doesn't have a default
- * export
- */
-import firebase from 'firebase'
+import firebase from 'firebase';
 
 const firebaseConfig = 
 {

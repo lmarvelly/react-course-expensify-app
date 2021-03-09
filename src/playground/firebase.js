@@ -211,13 +211,14 @@ database.ref('expenses')
 		createAt: 32141436542
 	});
 
-// Converting the data from firebase into an array of objects
+// Converting (parsing) the data from firebase into an array of objects
 database.ref('expenses')
 	.once('value')
 	.then((snapshot) => 
 	{
 		const expenses = [];
 
+		// iterate over snapshot
 		snapshot.forEach((childSnapshot) =>
 		{
 			expenses.push(
@@ -232,7 +233,8 @@ database.ref('expenses')
 	.catch((error) =>
 	{
 		console.log('Whoops something went wrong. ', error);
-	});
+	}
+);
 
 
 // Retrieving expenses data
