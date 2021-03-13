@@ -7,7 +7,7 @@ import { startSetExpenses } from './actions/expensers';
 import 'normalize.css/normalize.css'; // Normalizes all styles starting points on all browsers.
 import './styles/styles.scss'; // SASS styles form
 import 'react-dates/lib/css/_datepicker.css';
-import './firebase/firebase';
+import { firebase } from './firebase/firebase';
 
 const store = configureStore();
 
@@ -27,4 +27,17 @@ ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
 store.dispatch(startSetExpenses()).then(() =>
 {
 	ReactDOM.render(jsx, document.getElementById('app'));
+});
+
+// This will run every time the state is changed
+firebase.auth().onAuthStateChanged((user) =>
+{
+	if(user)
+	{
+		console.log('Log in');
+	}
+	else
+	{
+		console.log('Log out');
+	}
 });
