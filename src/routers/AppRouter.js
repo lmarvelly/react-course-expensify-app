@@ -1,13 +1,16 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch, Link, NavLink } from 'react-router-dom';
+import { Router, Route, Switch, Link, NavLink } from 'react-router-dom';
+import createHistory from 'history/createBrowserHistory';
 import ExpenseDashboardPage from '../components/ExpenseDashboardPage';
-import AddExpensePage from '../components/AppExpensePage';
+import AddExpensePage from '../components/AddExpensePage';
 import EditExpensePage from '../components/EditExpensePage';
 import HelpPage from '../components/HelpPage';
 import LoginPage from '../components/LoginPage';
 import NotFoundPage from '../components/NotFoundPage';
 import Header from '../components/Header';
 
+// The apps history which we can use in other Javascript files
+export const history = createHistory();
 
 /**
  * @constant AppRouter
@@ -20,11 +23,11 @@ import Header from '../components/Header';
  */
 const AppRouter = () => 
 (
-	<BrowserRouter>
+	<Router history={ history }>
 		<div>
 			<Header />
 			<Switch>
-				<Route path="/" component={LoginPage} exact={true}/>
+				<Route path="/" component={LoginPage} exact={true} 	/>
 				<Route path="/dashboard" component={ExpenseDashboardPage}/>
 				<Route path="/create" component={AddExpensePage} />
 				<Route path="/edit/:id" component={EditExpensePage} />
@@ -32,7 +35,7 @@ const AppRouter = () =>
 				<Route component={NotFoundPage} />
 			</Switch>
 		</div>
-	</BrowserRouter>
+	</Router>
 );
 
 export default AppRouter;

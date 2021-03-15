@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import AppRouter from './routers/AppRouter';
+import AppRouter, { history } from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import { startSetExpenses } from './actions/expensers';
 import 'normalize.css/normalize.css'; // Normalizes all styles starting points on all browsers.
@@ -22,22 +22,36 @@ const jsx = (
 	</Provider>
 );
 
-ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
-
-store.dispatch(startSetExpenses()).then(() =>
+let hasRendered = false;
+const renderApp = () =>
 {
-	ReactDOM.render(jsx, document.getElementById('app'));
-});
+	if (!hasRendered)
+	{
+		ReactDOM.render(jsx, document.getElementById('app'));
+		hasRendered = true;
+	}
+};
+
+ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
 
 // This will run every time the state is changed
 firebase.auth().onAuthStateChanged((user) =>
 {
-	if(user)
+	if (user)
 	{
-		console.log('Log in');
+
+		store.dispatch(startSetExpenses()).then(() =>
+		{
+			renderApp();
+			if (history.location.pathname === '/')
+			{
+				history.push('/dashboard');
+			}
+		});
 	}
 	else
 	{
-		console.log('Log out');
+		renderApp();
+		history.push('/');
 	}
 });

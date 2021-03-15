@@ -65,7 +65,7 @@ export default class ExpenseForm extends React.Component
 		else
 		{
 			this.setState(() => ({ error: ''}));
-			// onSubmit gets passed down by the AppExpensePage
+			// onSubmit gets passed down by the AddExpensePage
 			this.props.onSubmit(
 			{
 				description: this.state.description,
