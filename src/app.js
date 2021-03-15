@@ -1,9 +1,12 @@
+// Have third party's at the top
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+
 import AppRouter, { history } from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import { startSetExpenses } from './actions/expensers';
+import { login, logout } from './actions/auth';
 import 'normalize.css/normalize.css'; // Normalizes all styles starting points on all browsers.
 import './styles/styles.scss'; // SASS styles form
 import 'react-dates/lib/css/_datepicker.css';
@@ -39,7 +42,7 @@ firebase.auth().onAuthStateChanged((user) =>
 {
 	if (user)
 	{
-
+		store.dispatch(login(user.uid));
 		store.dispatch(startSetExpenses()).then(() =>
 		{
 			renderApp();
@@ -51,6 +54,7 @@ firebase.auth().onAuthStateChanged((user) =>
 	}
 	else
 	{
+		store.dispatch(logout());
 		renderApp();
 		history.push('/');
 	}
