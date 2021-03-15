@@ -26,6 +26,7 @@
 		"express": "4.15.4",
 		"extract-text-webpack-plugin": "3.0.0",
 		"firebase": "^8.2.10",
+		"history": "4.7.2",
 		"moment": "2.18.1",
 		"node-sass": "^5.0.0",
 		"normalize.css": "7.0.0",
@@ -54,8 +55,7 @@
 		"react-test-renderer": "16",
 		"webpack-dev-server": "2.5.1"
 	},
-	"engines": 
-	{
+	"engines": {
 		"node": "^12.20.0"
 	}
 }
