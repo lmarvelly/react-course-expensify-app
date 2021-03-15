@@ -8,8 +8,7 @@ export default (state = {}, action) =>
 	switch (action.type)
 	{
 		case 'LOGIN':
-			return
-			{
+			return {
 				uid: action.uid
 			};
 		case 'LOGOUT':
@@ -17,4 +16,4 @@ export default (state = {}, action) =>
 		default: 
 			return state;
 	}
-}
+};
