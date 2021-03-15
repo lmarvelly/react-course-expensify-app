@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 
 import AppRouter, { history } from './routers/AppRouter';
 import configureStore from './store/configureStore';
-import { startSetExpenses } from './actions/expensers';
+import { startSetExpenses } from './actions/expenses';
 import { login, logout } from './actions/auth';
 import 'normalize.css/normalize.css'; // Normalizes all styles starting points on all browsers.
 import './styles/styles.scss'; // SASS styles form

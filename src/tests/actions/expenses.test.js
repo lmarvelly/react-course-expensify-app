@@ -9,7 +9,7 @@ import {
 	startRemoveExpense,
 	setExpenses, 
 	startSetExpenses
-} from '../../actions/expensers';
+} from '../../actions/expenses';
 import expenses from '../fixtures/expenses';
 import database from '../../firebase/firebase';
 
