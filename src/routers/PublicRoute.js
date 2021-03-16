@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 
-import Header from '../components/Header'; 
-
 
 /**
  * Giving component an uppercase letter because we're going to be 
@@ -13,7 +11,7 @@ import Header from '../components/Header';
  * de-structured. This passes them down to props. It doesn' have to
  * be called rest. It could be called anything.
  */
-export const PrivateRoute = 
+export const PublicRoute = 
 ({ 
 	isAuthenticated, 
 	component: Compenent,
@@ -25,14 +23,11 @@ export const PrivateRoute =
 		(
 			isAuthenticated ? 
 			(
-				<div>
-					<Header />
-					<Compenent { ...props }/>
-				</div>
+				<Redirect to="/dashboard" />
 			)
 			: 
 			(
-				<Redirect to="/" />
+				<Compenent { ...props }/>
 			)
 		)} 
 	/>
@@ -44,4 +39,4 @@ const mapStateToProps = (state) =>
 	isAuthenticated: !!state.auth.uid
 });
 
-export default connect(mapStateToProps)(PrivateRoute);
+export default connect(mapStateToProps)(PublicRoute);
