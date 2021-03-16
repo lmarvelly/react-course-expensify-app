@@ -16,8 +16,12 @@ export const addExpense = (expense) => (
 
 export const startAddExpense = (expenseData = {}) => 
 {
-	return (dispatch) => {
-		const {
+	// Thump actions have a second argument, getState
+	return (dispatch, getState) => 
+	{
+		const uid = getState().auth.uid;
+		const 
+		{
 			// expense object default values
 			description = '', 
 			note = '', 
@@ -27,7 +31,7 @@ export const startAddExpense = (expenseData = {}) =>
 
 		const expense = { description, note, amount, createdAt };
 
-		return database.ref('expenses').push(expense).then((ref) =>
+		return database.ref(`users/${uid}/expenses`).push(expense).then((ref) =>
 		{
 			dispatch(addExpense(
 			{
@@ -52,9 +56,10 @@ export const removeExpense = ({ id } = {}) => (
 
 export const startRemoveExpense = ({ id } = {}) =>
 {
-	return (dispatch) => 
+	return (dispatch, getState) => 
 	{
-		return database.ref(`expenses/${id}`)
+		const uid = getState().auth.uid;
+		return database.ref(`users/${uid}/expenses/${id}`)
 		.remove()
 		.then(() => 
 		{ 
@@ -75,8 +80,10 @@ export const editExpense = (id, updates) => (
 
 export const startEditExpense = ( id, updates ) =>
 {
-	return (dispatch) => {
-		return database.ref(`expenses/${id}`)
+	return (dispatch, getState) => 
+	{
+		const uid = getState().auth.uid;
+		return database.ref(`users/${uid}/expenses/${id}`)
 			.update(updates)
 			.then(() =>
 			{
@@ -94,9 +101,11 @@ export const setExpenses = (expenses) =>
 
 export const startSetExpenses = () =>
 {
-	return (dispatch) =>
+	return (dispatch, getState) =>
 	{
-		return database.ref('expenses')
+		const uid = getState().auth.uid;
+
+		return database.ref(`users/${uid}/expenses`)
 			.once('value')
 			.then((snapshot) =>
 			{
